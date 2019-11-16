@@ -74,3 +74,11 @@ for (HtmlElement element : spanList) {
 // The Doj way... 
 Doj spanDoj = Doj.on(page).get("#updates tr", 1).get("td", 2).get("span.item"); 
 ```
+
+The XPath expression quickly becomes illegible and to make the best of the DIY way, you'll have to include plenty of checks for **null** pointers - most of them have been left out of the above example.
+
+**Doj** is inspired by [jQuery](https://jquery.com/) and it shows. For one, spanDoj will never result to **null**, even if there is no table. Just like the jQuery object, **Doj** is a kind of array, that simply accepts any input you throw at it. If you want to know whether there is actually anything there, use the **size()** or **isEmpty()** methods.
+
+Second, you can harness **Doj's** support for some simple [CSS selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors), which is a closer match to HTML than XPath. Think of the trouble you get into with XPath when matching an element by class.
+
+## Getting started
