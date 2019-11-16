@@ -82,3 +82,95 @@ The XPath expression quickly becomes illegible and to make the best of the DIY w
 Second, you can harness **Doj's** support for some simple [CSS selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors), which is a closer match to HTML than XPath. Think of the trouble you get into with XPath when matching an element by class.
 
 ## Getting started
+
+You can create a **Doj** object using one of the static **on()** methods on the **Doj** class. For example:
+
+```java 
+// Create a Doj instance with the entire page as context 
+Doj pageDoj = Doj.on(page); 
+
+// Create a Doj instance with two (or more) elements as context 
+Doj doj = Doj.on(page.getElementById("item-1"), page.getElementById("item-2")); 
+
+// Create a Doj instance with the elements from the list as context 
+Doj divDoj = Doj.on(page.getElementsByTagName("div"));
+```
+
+
+Now you can get started traversing the DOM: 
+
+```java 
+Doj pageDoj = Doj.on(page);
+
+// Get the p with class "article" inside the element with id "hello" 
+Doj article = pageDoj.get("#hello p.article");
+
+// Get the inputs inside the span with class input inside the table 
+Doj input = pageDoj.get("table span.input input");
+
+// Get the labels before the span of those inputs 
+Doj label = input.parent("span").previous("label"); 
+```
+
+How about entering some data into a form and submitting it?
+
+```java
+// Get the form inputs 
+Doj inputs = Doj.on(page).get("#login input");
+
+// Set the username 
+inputs.withName("username").value("myusername");
+
+// Set the password 
+inputs.withName("password").value("mypassword");
+
+// Get the submit button and click it 
+HtmlPage result = inputs.withType("submit").click()
+```
+
+Or looping over the current nodes? 
+
+```java
+// Get all p elements on the page 
+Doj paragraphs = Doc.on(page).get("p"); 
+
+// Now examine each single paragraph 
+for (Doj p : paragraphs) { 
+   // Get the HtmlElement version of the current node 
+   HtmlElement element = p.getElement(0); 
+   // Which is equivalent to... 
+   element = p.firstElement(); 
+   // Which, since we're looking at one p a time, is equivalent to... 
+   element = p.lastElement(); 
+   // And to... 
+   element = p.sliceElements(0, 1)[0]; 
+   // And to... 
+   element = p.sliceElements(-1, 1)[0]; 
+}
+```
+
+Another common use case is looking up an anchor using the link text: 
+```java
+Doc.on(page).get("a").withTextContaining("Logout").click();
+```
+
+## Good to know
+We've collected some information that's nice to know but not absolutely critical in using Doj below.
+
+## Doj is immutable
+**Doj** objects are immutable: once it's been created there is no way of adding or removing nodes. Sure, there's the **remove()** method, but what it actually does, like many of the other methods, is create a new Doj instance without the removed node.
+
+## Why there is no plain constructor
+You might be wondering why the Doj class is abstract. Well, in order to keep the code safe, every method would have to check whether the **Doj** instance it's working on is empty or not. To make sure the important code remains legible, we created two Doj subclasses: one for a non-empty **Doj** instance and one for an empty **Doj** instance. The static **on()** factory methods make sure the correct type of **Doj** instance is created.
+
+## Why Doj accepts anything
+A feature that some people might overlook when using jQuery, is the fact that it just keeps on working, even when the objects you are trying to manipulate or traverse don't exist.
+
+**Doj** does the same thing. One might argue that tests should fail fast, including the code to traverse the DOM, whereas **Doj** acts like nothing strange is going on. Why? Because most of the time you're not looking to find an error in the path you're travelling; you're checking what the value of an attribute is, whether some text is present or whether clicking the button at the end of that path results in the page you expected.
+
+When you absolutely need to verify that the Doj instance is not empty, use the **verifyNotEmpty()** method. When the Doj instance is not empty, it will simply return a reference to the instance, otherwise it will throw a **DojIsEmptyException**. 
+In the following code, the exception will be thrown when the element with id search could not be found. When it does exist, the first button inside the element is clicked. 
+
+```java
+Doj.on(page).getById("search").verifyNotEmpty().get("button").click();
+```
