@@ -38,4 +38,9 @@ If you're using Maven, getting started using Hue is as simple as plugging the fo
 </dependency>
 ```
 
-The snapshot releases are available at http://hue.googlecode.com/svn/maven2-snapshots/be/roam/hue/hue/.
+## Introduction
+
+[HtmlUnit](http://htmlunit.sourceforge.net/) offers a lot of power and flexibility in testing webpages, but if you want to find the **span** with class item in the third column of the second row of the **table** inside the **div** with **id** updates, you're basically left with two choices: 
+
+* Use a hideous [XPath](https://en.wikipedia.org/wiki/XPath) expression
+* Get the element with **id** updates, get the **table**, get the second **row**, the third column of that **row**, etc.
