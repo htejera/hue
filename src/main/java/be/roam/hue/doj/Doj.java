@@ -1025,7 +1025,7 @@ public abstract class Doj implements Iterable<Doj> {
         public Doj getByTag(String tag) {
             List<HtmlElement> list = new ArrayList<HtmlElement>();
             for (HtmlElement element : contextElements) {
-                list.addAll(element.getHtmlElementsByTagName(tag));
+                list.addAll(element.getElementsByTagName(tag));
             }
             return on(list);
         }
