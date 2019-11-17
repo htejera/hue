@@ -1372,7 +1372,7 @@ public abstract class Doj implements Iterable<Doj> {
         public Doj getByAttributeMatching(String attribute, Pattern pattern) {
             List<HtmlElement> list = new ArrayList<HtmlElement>();
             for (HtmlElement element : contextElements) {
-                for (HtmlElement child : element.getAllHtmlChildElements()) {
+                for (HtmlElement child : element.getHtmlElementDescendants()) {
                     if (pattern.matcher(child.getAttribute(attribute)).matches()) {
                         list.add(child);
                     }
