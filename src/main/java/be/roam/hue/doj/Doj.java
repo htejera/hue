@@ -1011,9 +1011,9 @@ public abstract class Doj implements Iterable<Doj> {
         public Doj getById(String id) {
             for (HtmlElement element : contextElements) {
                 try {
-                    HtmlElement elementWithId = element.getElementById(id);
-                    if (elementWithId != null) {
-                        return on(elementWithId);
+                    List<HtmlElement> elementsWithId = element.getByXPath("//*[@id='" + id +"']");
+                    if (elementsWithId.size() > 0) {
+                        return on(elementsWithId.get(0));
                     }
                 } catch (ElementNotFoundException e) {
                     // Ignore
