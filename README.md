@@ -1,8 +1,10 @@
 # hue
 **Hue** provides Java components to speed up writing tests using HtmlUnit, such as jQuery style DOM traversal and manipulation and common data generation tools (postal codes, telephone numbers, etc.).
-This repo was automatically exported from https://code.google.com/archive/p/hue/
 
- The code is written by Kevin Wetzels. Some works based on this approach are: https://gebish.org/manual/1.0/api/geb/navigator/Navigator.html
+This repo was automatically exported from https://code.google.com/archive/p/hue/. The code is written by Kevin Wetzels. 
+Some works based on this project are:
+
+* https://gebish.org/manual/1.0/api/geb/navigator/Navigator.html
 
 ## Hue Doj: Dom like jQuery
 The **1.0** release of Hue focused on the creation of Doj, Hue's jQuery emulator for HtmlUnit.
