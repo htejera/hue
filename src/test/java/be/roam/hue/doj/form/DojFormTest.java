@@ -91,7 +91,7 @@ public class DojFormTest {
 
     @Before
     public void before() throws Exception {
-        WebClient client = new WebClient(BrowserVersion.FIREFOX_3);
+        WebClient client = new WebClient(BrowserVersion.BEST_SUPPORTED);
         page = client.getPage(DojFormTest.class.getResource("/test.html"));
         onPage = Doj.on(page);
         form = new DojForm(page);
